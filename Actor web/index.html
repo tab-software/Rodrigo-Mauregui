@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodrigo Mauregui | Actor y Profesor de Teatro</title>
+    <style>
+        /* --- VARIABLES DE COLOR --- */
+        :root {
+            --bg-color: #F8F6F2; /* Crema claro, fondo principal */
+            --text-main: #2C2A29; /* Casi negro, texto principal */
+            --accent-green: #5B7A58; /* Verde naturaleza */
+            --accent-sand: #C6B49D; /* Tono arena/tierra */
+            --accent-blue: #4A6B8C; /* Azul apagado */
+        }
+
+        /* --- RESET Y BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px;
+            background-color: var(--accent-sand);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .hero h2 {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 300;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about {
+            max-width: 800px;
+            margin: 60px auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .about p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* --- EVENTS SECTION --- */
+        .events-section {
+            max-width: 800px;
+            margin: 0 auto 80px auto;
+            padding: 0 20px;
+        }
+
+        .event-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-sand);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+
+        .event-date {
+            text-align: center;
+            min-width: 80px;
+            padding-right: 20px;
+            border-right: 1px solid #eee;
+        }
+
+        .event-date .day {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            line-height: 1;
+        }
+
+        .event-date .month {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #777;
+        }
+
+        .event-details {
+            flex-grow: 1;
+            padding: 0 20px;
+        }
+
+        .event-details h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--text-main);
+        }
+
+        .event-details p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .event-btn {
+            padding: 10px 20px;
+            background-color: var(--text-main);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .event-btn:hover {
+            background-color: var(--accent-green);
+        }
+
+        /* --- FEED / GRID SECTION (Estilo IG) --- */
+        .feed-section {
+            margin-bottom: 80px;
+        }
+
+        .feed-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            aspect-ratio: 4/5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Estilo para las tarjetas con imagen */
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Variaciones de color para las tarjetas estáticas */
+        .card-green { background-color: var(--accent-green); color: white; }
+        .card-light { background-color: white; color: var(--text-main); }
+
+        .card-quote {
+            font-size: 1.4rem;
+            font-weight: bold;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1; /* Para estar sobre el fondo */
+        }
+
+        .card-author {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            position: absolute;
+            bottom: 20px;
+            border: 1px solid currentColor;
+            padding: 5px 12px;
+            border-radius: 20px;
+            z-index: 1;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--text-main);
+            color: white;
+        }
+
+        .btn-footer {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+
+        .btn-footer:hover {
+            background-color: var(--accent-sand);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            .event-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            .event-date {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+                padding-right: 0;
+                padding-bottom: 15px;
+            }
+            .event-details {
+                padding: 0;
+            }
+            .event-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Rodrigo Mauregui</h1>
+        <h2>Actor & Profesor de Teatro</h2>
+    </header>
+
+    <section class="about">
+        <p>Explorando la percepción, las emociones y el propósito a través de la actuación y la docencia. Empezar de nuevo no es fracasar, es ajustar la dirección.</p>
+    </section>
+
+    <section class="events-section">
+        <h2 class="section-title">Próximos Encuentros</h2>
+        
+        <div class="event-card">
+            <div class="event-date">
+                <span class="day">15</span>
+                <span class="month">MAR</span>
+            </div>
+            <div class="event-details">
+                <h3>Seminario: Gestión Emocional en Escena</h3>
+                <p>📍 Modalidad Online (Zoom) | 18:00 hs</p>
+            </div>
+            <a href="#" class="event-btn">Inscribirme</a>
+        </div>
+
+        <div class="event-card" style="border-left-color: var(--accent-green);">
+            <div class="event-date">
+                <span class="day">28</span>
+                <span class="month">MAR</span>
+            </div>
+            <div class="event-details">
+                <h3>Clase Abierta de Teatro</h3>
+                <p>📍 Estudio de Arte | Presencial | 10:00 hs</p>
+            </div>
+            <a href="#" class="event-btn">Ver más</a>
+        </div>
+
+        <div class="event-card" style="border-left-color: var(--accent-blue);">
+            <div class="event-date">
+                <span class="day">10</span>
+                <span class="month">ABR</span>
+            </div>
+            <div class="event-details">
+                <h3>Estreno: "La Percepción"</h3>
+                <p>📍 Sala Independiente | Presencial | 21:00 hs</p>
+            </div>
+            <a href="#" class="event-btn">Entradas</a>
+        </div>
+    </section>
+
+    <section class="feed-section">
+        <h2 class="section-title">Reflexiones</h2>
+        <div class="feed-container">
+            <div class="card">
+                <img src="img/image_4.png" alt="No podés resolver afuera lo que sigue roto adentro.">
+            </div>
+
+            <div class="card">
+                <img src="img/image_1.png" alt="El tiempo no me apura... pero tampoco me espera.">
+            </div>
+
+            <div class="card">
+                <img src="img/image_2.png" alt="La vida funciona al revés... y entenderlo cambia todo.">
+            </div>
+
+            <div class="card card-green">
+                <p class="card-quote">Empezar de nuevo no es fracasar. Es ajustar la dirección.</p>
+                <span class="card-author">START</span>
+            </div>
+            
+            <div class="card">
+                <img src="img/image_1.png" alt="Y si cambiamos el 'Dejemos que fluya'... por algo más real, más humano, más presente.">
+            </div>
+
+            <div class="card card-light">
+                <p class="card-quote" style="font-size: 2.5rem;">HOY<br>DECRETO</p>
+                <span class="card-author">RODRIGO MAUREGUI</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h2>¿Querés saber más sobre mis clases o seminarios?</h2>
+        <a href="#" class="btn-footer">Contactame</a>
+    </footer>
+
+</body>
+</html>
