@@ -1,3 +1,1 @@
-auto down scroll
-redes
-
+video pixelado

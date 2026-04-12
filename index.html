@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="height: 100dvh;overflow-y: hidden;" id="html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rodrigo Mauregui | Actor y Profesor de Teatro</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/icon.png">
 </head>
 <body>
 
@@ -74,14 +75,14 @@
             <button class="carousel-btn prev" aria-label="Previous">❮</button>
             <div class="carousel">
                 <div class="carousel-slide active">
-                    <iframe src="https://www.youtube.com/embed/51WeA4I-LZY"
+                    <iframe src="https://www.youtube.com/embed/Mv5ukWRMDTY"
                         title="Video 1"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                 </div>
                 <div class="carousel-slide">
-                    <iframe src="https://www.youtube.com/embed/Mv5ukWRMDTY"
+                    <iframe src="https://www.youtube.com/embed/51WeA4I-LZY"
                         title="Video 1"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -122,9 +123,13 @@
         </div>
     </section>
 
-    <!-- <div id="overlay">
-        <button id="startBtn">Entrar con sonido</button>
-    </div> -->
+    <div id="overlay">
+        <h1>Habilitar experiencia inmersiva</h1>
+        <div style="display: flex;gap: 20px;">
+            <button id="startBtnYES" class="startBtn">SI</button>
+            <button id="startBtnNO" class="startBtn">NO</button>
+        </div>
+    </div>
     <audio id="audio" preload="auto">
         <source src="audio/audio.ogg" type="audio/ogg">
     </audio>
@@ -132,34 +137,64 @@
     <footer>
         <h2>¿Querés saber más sobre mis clases o seminarios?</h2>
         <a href="#" class="btn-footer">Contactame</a>
-
+        <h2 style="margin-top: 20px;">Mis Redes</h2>
+        <div class="socialNetworks">
+            <a href="https://wa.me/5492213502882?text=Estoy%20interesado%20en%20saber%20mas%20sobre%20tu%20perfil" target="_blank">
+                <img src="https://static.cdnlogo.com/logos/w/29/whatsapp-icon.svg">
+            </a>
+            <a href="https://www.instagram.com/rodrigomauregui" target="_blank">
+                <img src="https://static.cdnlogo.com/logos/i/93/instagram.svg">
+            </a>
+            <a href="https://www.linkedin.com/in/rodrigo-mauregui-baa98517/" target="_blank">
+                <img src="https://static.cdnlogo.com/logos/l/58/linkedin-icon_800.png">
+            </a>
+            <a href="https://www.youtube.com/@Roy9109" target="_blank">
+                <img src="https://static.cdnlogo.com/logos/y/75/youtube-icon_800.png">
+            </a>
+            <a href="https://www.facebook.com/rodrigo.mauregui/" target="_blank">
+                <img src="https://static.cdnlogo.com/logos/f/68/facebook-hyper-gadget_800.png">
+            </a>
+            <a href="https://www.tiktok.com/@rodrigomauregui" target="_blank">
+                <img src="https://static.cdnlogo.com/logos/t/59/tiktok-hyper-gadget.svg">
+            </a>
+        </div>
     </footer>
+    
     <div class="footer-credit">
         <p>Sitio diseñado y desarrollado por <a href="https://tab.ar" target="_blank">tab_</a></p>
         <img src="https://s3.tab.ar/tab/1769551300912_tabIcon.svg" alt="tab_ logo" style="height: 30px;">
     </div>
+
+    <a class="flotantWsp" href="https://wa.me/5492213502882?text=Estoy%20interesado%20en%20saber%20mas%20sobre%20tu%20perfil" target="_blank">
+        <img src="https://static.cdnlogo.com/logos/w/29/whatsapp-icon.svg">
+    </a>
+
     <script>
         const audio = document.getElementById("audio");
 
-        window.addEventListener("load", async () => {
-            // const ok = confirm("Activar sonido para la experiencia completa?");
-            
-            if (ok) {
-                try {
-                    audio.volume = 1.0;
-                    await audio.play();
-                    console.log("Reproduciendo");
-                } catch (e) {
-                    console.log("Error", e);
+        const final = () => {
+            document.getElementById("overlay").style.display="none";
+            document.getElementById("html").style="";
+            setTimeout(() => { 
+                if (window.scrollY === 0) {
+                    document.getElementById("aboutSection").scrollIntoView({
+                        behavior: "smooth"
+                    });
                 }
-            }
+            }, 1000);
+        };
+
+        document.getElementById("startBtnYES").addEventListener("click", () => {
+            audio.volume = 1.0;
+            audio.mute = false;
+            audio.play();
+            final();
+        });
+        document.getElementById("startBtnNO").addEventListener("click", () => {
+            final();
         });
 
-        setTimeout(() => {
-            document.getElementById("aboutSection").scrollIntoView({
-                behavior: "smooth"
-            });
-        }, 2000);
+
         // Carousel functionality
         const slides = document.querySelectorAll('.carousel-slide');
         const prevBtn = document.querySelector('.prev');

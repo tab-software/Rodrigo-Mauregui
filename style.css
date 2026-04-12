@@ -45,7 +45,7 @@ body {
 /* --- HERO SECTION --- */
 .hero {
     position: relative;
-    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -62,7 +62,7 @@ body {
 
 .hero-image {
     max-width: 100%;
-    height: 100dvh;
+    height: 100%;
     object-fit: cover;
     filter: brightness(0.6) contrast(1.1);
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
@@ -109,7 +109,7 @@ body {
     animation: pulse 1.2s infinite ease-in-out;
 
     position: absolute;
-    top: 80%;
+    top: 75%;
     left: 50%;
 }
 
@@ -347,6 +347,8 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    z-index: 999;
+    position: relative;
 }
 
 .footer-credit a {
@@ -476,14 +478,75 @@ footer {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100dvw;
+    width: 100%;
     height: 100dvh;
     background: rgba(0, 0, 0, 0.5);
     z-index: 99999;
+
+    display: flex;
+    flex-direction: column;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    background: rgb(0, 0, 0, 0.8);
+    text-align: center;
 }
 
-#startBtn {
+
+.startBtn {
     font-size: 20px;
     padding: 15px 30px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 40px;
+    border-radius: 8px;
+}
+
+.socialNetworks {
+    width: 100%;
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    border: solid 1px white;
+    border-radius: 20px;
+    width: min-content;
+    margin: auto;
+    margin-top: 5px;
+    padding: 20px;
+}
+.socialNetworks img {
+    width: 24px;
+}
+.flotantWsp {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 100%;
+    background-color: red;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(80, 200, 80);
+    animation: wspPulse 1.2s infinite ease-in-out;
+}
+.flotantWsp img{
+    width: 48px;
+}
+
+@keyframes wspPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
