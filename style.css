@@ -525,8 +525,8 @@ footer {
     bottom: 0;
     right: 0;
     margin: 20px;
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     border-radius: 100%;
     background-color: rgb(80, 200, 80);
     display: flex;
@@ -537,8 +537,8 @@ footer {
     z-index: 999;
 }
 .flotantWsp img{
-    width: 60%;
-    height: 60%;
+    width: 75%;
+    height: 75%;
     object-fit: contain;
 }
 
