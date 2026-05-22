@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rodrigo Mauregui | Actor y Profesor de Teatro</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="/icon.png">
     <style>
         /* --- VARIABLES DE COLOR --- */
@@ -590,41 +590,7 @@
 
     <section class="events-section">
         <h2 class="section-title">Próximos Encuentros</h2>
-        
-        <div class="event-card">
-            <div class="event-date">
-                <span class="day">15</span>
-                <span class="month">MAR</span>
-            </div>
-            <div class="event-details">
-                <h3>Seminario: Gestión Emocional en Escena</h3>
-                <p>📍 Modalidad Online (Zoom) | 18:00 hs</p>
-            </div>
-            <a href="#" class="event-btn">Inscribirme</a>
-        </div>
-
-        <div class="event-card" style="border-left-color: var(--accent-green);">
-            <div class="event-date">
-                <span class="day">28</span>
-                <span class="month">MAR</span>
-            </div>
-            <div class="event-details">
-                <h3>Clase Abierta de Teatro</h3>
-                <p>📍 Estudio de Arte | Presencial | 10:00 hs</p>
-            </div>
-            <a href="#" class="event-btn">Ver más</a>
-        </div>
-
-        <div class="event-card" style="border-left-color: var(--accent-blue);">
-            <div class="event-date">
-                <span class="day">10</span>
-                <span class="month">ABR</span>
-            </div>
-            <div class="event-details">
-                <h3>Estreno: "La Percepción"</h3>
-                <p>📍 Sala Independiente | Presencial | 21:00 hs</p>
-            </div>
-        <a href="#" class="event-btn">Entradas</a>
+        <div id="eventsContainer">
         </div>
 
     <section class="videos-section">
@@ -632,27 +598,6 @@
         <div class="carousel-container">
             <button class="carousel-btn prev" aria-label="Previous">❮</button>
             <div class="carousel">
-                <div class="carousel-slide active">
-                    <iframe src="https://www.youtube.com/embed/Mv5ukWRMDTY"
-                        title="Video 1"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-                </div>
-                <div class="carousel-slide">
-                    <iframe src="https://www.youtube.com/embed/51WeA4I-LZY"
-                        title="Video 1"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-                </div>
-                <div class="carousel-slide">
-                    <iframe src="https://www.youtube.com/embed/h30kzoX8-Mg"
-                        title="Video 1"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-                </div>
             </div>
             <button class="carousel-btn next" aria-label="Next">❯</button>
         </div>
@@ -666,18 +611,7 @@
 
     <section class="feed-section">
         <h2 class="section-title">POSTS</h2>
-        <div class="feed-container">
-            <div class="card">
-                <img src="img/a.jpeg" alt="No podés resolver afuera lo que sigue roto adentro.">
-            </div>
-
-            <div class="card">
-                <img src="img/1.jpeg" alt="No podés resolver afuera lo que sigue roto adentro.">
-            </div>
-
-            <div class="card">
-                <img src="img/2.jpeg" alt="El tiempo no me apura... pero tampoco me espera.">
-            </div>
+        <div class="feed-container" id="feedContainer">
         </div>
     </section>
 
@@ -753,15 +687,54 @@
         });
 
 
-        // Carousel functionality
-        const slides = document.querySelectorAll('.carousel-slide');
+        let currentSlide = 0;
+        let totalSlides = 0;
+        let videosData = [];
+
+        const slidesContainer = document.querySelector('.carousel');
+        const indicatorsContainer = document.querySelector('.carousel-indicators');
         const prevBtn = document.querySelector('.prev');
         const nextBtn = document.querySelector('.next');
-        const indicators = document.querySelectorAll('.indicator');
-        let currentSlide = 0;
-        const totalSlides = slides.length;
+
+        function getEmbedUrl(url) {
+            const videoId = url.match(/[?&]v=([^&]+)/);
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId[1]}`;
+            }
+            return url;
+        }
+
+        function createSlides(videos) {
+            slidesContainer.innerHTML = '';
+            indicatorsContainer.innerHTML = '';
+            
+            videos.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = `carousel-slide${index === 0 ? ' active' : ''}`;
+                const embedUrl = getEmbedUrl(item.video);
+                slide.innerHTML = `
+                    <iframe src="${embedUrl}"
+                        title="Video ${index + 1}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                `;
+                slidesContainer.appendChild(slide);
+
+                const indicator = document.createElement('span');
+                indicator.className = `indicator${index === 0 ? ' active' : ''}`;
+                indicator.dataset.slide = index;
+                indicatorsContainer.appendChild(indicator);
+            });
+
+            totalSlides = videos.length;
+            currentSlide = 0;
+            attachCarouselEvents();
+        }
 
         function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.indicator');
             slides.forEach((slide, i) => {
                 slide.classList.toggle('active', i === index);
             });
@@ -771,24 +744,78 @@
             currentSlide = index;
         }
 
-        prevBtn.addEventListener('click', () => {
-            let newIndex = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
-            showSlide(newIndex);
-        });
+        function attachCarouselEvents() {
+            const prevBtn = document.querySelector('.prev');
+            const nextBtn = document.querySelector('.next');
+            const indicators = document.querySelectorAll('.indicator');
 
-        nextBtn.addEventListener('click', () => {
-            let newIndex = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1;
-            showSlide(newIndex);
-        });
+            prevBtn.addEventListener('click', () => {
+                let newIndex = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
+                showSlide(newIndex);
+            });
 
-        indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => showSlide(index));
-        });
+            nextBtn.addEventListener('click', () => {
+                let newIndex = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1;
+                showSlide(newIndex);
+            });
 
-        /*setInterval(() => {
-            let newIndex = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1;
-            showSlide(newIndex);
-        }, 8000);*/
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => showSlide(index));
+            });
+        }
+
+        fetch('https://public.tab.ar/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            videosData = data["Videos"] || [];
+            if (videosData.length > 0) {
+                createSlides(videosData);
+            }
+
+            const postsData = data["Posts"] || [];
+            const feedContainer = document.getElementById('feedContainer');
+            feedContainer.innerHTML = '';
+
+            postsData.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<img src="${item.image}" alt="${item.texto || ''}">`;
+                feedContainer.appendChild(card);
+            });
+
+            const encuentrosData = data["Encuentros"] || [];
+            const eventsContainer = document.getElementById('eventsContainer');
+            eventsContainer.innerHTML = '';
+
+            const colors = ['var(--accent-sand)', 'var(--accent-green)', 'var(--accent-blue)'];
+            let colorIndex = 0;
+
+            encuentrosData.forEach((item) => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                eventCard.style.borderLeftColor = colors[colorIndex % colors.length];
+                colorIndex++;
+
+                eventCard.innerHTML = `
+                    <div class="event-date">
+                        <span class="day">${item.day}</span>
+                        <span class="month">${item.month}</span>
+                    </div>
+                    <div class="event-details">
+                        <h3>${item.title}</h3>
+                        <p>📍 ${item.localization}</p>
+                    </div>
+                    <a href="${item.href || '#'}" class="event-btn">${item.hrefText}</a>
+                `;
+                eventsContainer.appendChild(eventCard);
+            });
+        })
+        .catch(err => console.error("Error cargando datos:", err));
     </script>
 </body>
 </html>
