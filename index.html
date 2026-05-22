@@ -534,18 +534,21 @@
             bottom: 0;
             right: 0;
             margin: 20px;
-            padding: 20px;
+            width: 64px;
+            height: 64px;
             border-radius: 100%;
-            background-color: red;
-            aspect-ratio: 1;
+            background-color: rgb(80, 200, 80);
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: rgb(80, 200, 80);
             animation: wspPulse 1.2s infinite ease-in-out;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            z-index: 999;
         }
         .flotantWsp img{
-            width: 48px;
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
         }
 
         @keyframes wspPulse {
